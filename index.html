@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pratik Bendsure – Futuristic Portfolio</title>
+  <style>
+    /* RESET */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* BODY & BACKGROUND */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, #001f3f, #000);
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+
+    /* GLASS EFFECT */
+    .glass {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .glass:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+    }
+
+    /* HERO */
+    header {
+      text-align: center;
+      padding: 4rem 1rem;
+      margin: 2rem;
+      position: relative;
+    }
+    header::before {
+      content:"";
+      position:absolute; top:0; left:50%; transform:translateX(-50%);
+      width:300px; height:300px;
+      background: radial-gradient(circle,#00d4ff55,#001f3f00);
+      animation: pulse 6s infinite;
+      border-radius:50%;
+      z-index:-1;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translateX(-50%) scale(1);}
+      50%      { transform: translateX(-50%) scale(1.2);}
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #00d4ff;
+      text-shadow: 0 0 8px #00d4ff;
+    }
+    header p {
+      margin-top: .5rem;
+      font-size: 1.2rem;
+      color: #a0eaff;
+    }
+
+    /* STATS */
+    .stats {
+      display: flex; gap:1rem; justify-content:center;
+      flex-wrap:wrap; margin:2rem 1rem;
+    }
+    .stat-card {
+      flex:1; min-width:150px; padding:1.5rem;
+      text-align:center; position:relative;
+    }
+    .stat-card .icon {
+      font-size:2.5rem; margin-bottom:.5rem;
+      color:#00d4ff; text-shadow:0 0 8px #00d4ff;
+    }
+    .stat-card h3 {
+      font-size:2rem; margin-bottom:.25rem;
+      color:#fff;
+    }
+    .stat-card small {
+      color:#88d4ff;
+    }
+
+    /* MAIN GRID */
+    main {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:2rem; padding:1rem; max-width:1200px; margin:auto;
+    }
+
+    .card { overflow:hidden; }
+    .card-content { padding:1.5rem; }
+    .card-content h2 {
+      font-size:1.5rem; margin-bottom:1rem;
+      color:#00d4ff; text-shadow:0 0 6px #00d4ff;
+    }
+    .card-content p, .card-content ul, .card-content table {
+      color:#e0e0e0;
+    }
+
+    /* PROJECTS */
+    .projects { display:grid; gap:1rem; }
+    .project-card {
+      position:relative; padding:1rem;
+    }
+    .project-card::before {
+      content:"";
+      position:absolute; top:-10%; left:-10%;
+      width:120%; height:120%;
+      background: linear-gradient(120deg,#00d4ff55,#ff00d455);
+      filter: blur(40px);
+      z-index:-1;
+      transition:opacity .3s;
+      opacity:0;
+    }
+    .project-card:hover::before { opacity:1; }
+    .project-card h4 { margin-bottom:.5rem; color:#fff; }
+
+    /* GALLERY */
+    .gallery { display:flex; gap:1rem; flex-wrap:wrap; }
+    .gallery img {
+      width:100px; border-radius:8px; border:2px solid transparent;
+      transition: all .3s;
+    }
+    .gallery img:hover {
+      border-color:#00d4ff; transform: scale(1.2) rotate(5deg);
+      box-shadow:0 0 10px #00d4ff;
+    }
+
+    /* MORE PANEL */
+    #more {
+      max-height:0; overflow:hidden;
+      transition:max-height .5s ease;
+    }
+    #more.open { max-height:500px; }
+    .btn {
+      display:inline-block; padding:.75rem 1.5rem;
+      color:#001f3f; background:#00d4ff;
+      border-radius:8px; cursor:pointer;
+      font-weight:bold; text-transform:uppercase;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);
+      transition:transform .3s,background .3s;
+    }
+    .btn:hover { transform:scale(1.05); background:#a0ffff; }
+
+    /* TABLE */
+    table {
+      width:100%; border-collapse:collapse; margin-top:1rem;
+    }
+    th,td {
+      padding:.75rem; text-align:center;
+    }
+    th {
+      background:#00d4ff; color:#001f3f;
+    }
+    td { border-bottom:1px solid #333; }
+
+    /* FORM */
+    form {
+      display:grid; gap:1rem; padding:1.5rem;
+    }
+    form label { color:#a0eaff; font-weight:bold; }
+    form input[type="text"],
+    form input[type="submit"] {
+      padding:.5rem; border:none; border-radius:6px;
+    }
+    form input[type="text"] {
+      background:rgba(255,255,255,0.1);
+      color:#e0e0e0; border:1px solid rgba(255,255,255,0.2);
+    }
+    form input[type="submit"] {
+      background:#00d4ff; color:#001f3f; font-weight:bold;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);
+      width:fit-content;
+    }
+    form input[type="submit"]:hover { background:#a0ffff; }
+
+    /* OUTPUT */
+    #output {
+      margin-top:1rem; padding:1rem;
+      background:rgba(0,212,255,0.1);
+      border-left:4px solid #00d4ff;
+      border-radius:6px; color:#001f3f;
+    }
+
+    /* SOCIAL ICONS */
+    .socials {
+      display:flex; gap:1rem; margin-top:1rem; justify-content:center;
+    }
+    .socials a {
+      font-size:1.8rem; transition:transform .3s,color .3s;
+      color:#e0e0e0;
+    }
+    .socials a:hover {
+      transform:scale(1.2); color:#00d4ff;
+    }
+
+    /* FLOATING CONTACTS */
+    aside {
+      position:fixed; bottom:1rem; right:1rem;
+      display:flex; flex-direction:column; gap:.5rem;
+    }
+    aside a {
+      background:#00d4ff; color:#001f3f;
+      padding:.6rem; border-radius:50%;
+      box-shadow:0 4px 12px rgba(0,0,0,0.5);
+      transition:background .3s,transform .3s;
+    }
+    aside a:hover { background:#a0ffff; transform:scale(1.1); }
+  </style>
+
+  <script>
+    function showMore(){
+      const m=document.getElementById('more'),
+            b=document.getElementById('moreBtn');
+      m.classList.toggle('open');
+      b.textContent = m.classList.contains('open')? 'Show Less':'Show More';
+    }
+    function displayDetails(e){
+      e.preventDefault();
+      const n=e.target.name.value.trim(),
+            c=e.target.class.value.trim(),
+            r=e.target.roll.value;
+      if(!n||!c||!r) return alert('Fill all fields');
+      document.getElementById('output').innerHTML=`
+        <h3>Submitted Info</h3>
+        <p><strong>Name:</strong> ${n}</p>
+        <p><strong>Class:</strong> ${c}</p>
+        <p><strong>Roll No:</strong> ${r}</p>`;
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <header class="glass">
+    <h1>Pratik Bendsure</h1>
+    <p>Electronics & Computer Engineer | Web Developer</p>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card glass"><div class="icon">🎓</div><h3>9.0</h3><small>GPA</small></div>
+    <div class="stat-card glass"><div class="icon">💻</div><h3>5+</h3><small>Projects</small></div>
+    <div class="stat-card glass"><div class="icon">🏅</div><h3>5</h3><small>Certs</small></div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <main>
+    <!-- PROFILE -->
+    <section class="card glass" style="display: flex; justify-content: center; align-items: center; text-align: center; flex-direction: column; padding: 20px;">
+      <img src="me.jpg" alt="Pratik Bendsure" style="max-width: 100%; height: auto;">
+      <div class="card-content">
+        <h2>About Me</h2>
+        <p>B.Tech in ECE at WIT Solapur. Passionate about coding, web development, and solving problems.</p>
+      </div>
+    </section>
+    
+
+    <!-- SKILLS -->
+    <section class="card glass">
+      <div class="card-content" id="skills">
+        <h2>Academic Skills</h2>
+        <ul>
+          <li>C</li>
+          <li>C++</li>
+          <li>Java</li>
+          <li>Python</li>
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript</li>
+          <li>Git</li>
+          <li>VS Code</li>
+          
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <!-- PROJECTS -->
+<section class="card glass">
+  <div class="card-content" id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      
+      <a href="https://drag-and-drop-file.netlify.app/" target="_blank" style="text-decoration: none;">
+        <div class="project-card glass">
+          <h4>Drag and Drop Files</h4>
+          <p>For uploading files by drag and drop</p>
+        </div>
+      </a>
+
+      <a href="https://graceful-sprite-440f56.netlify.app/" target="_blank" style="text-decoration: none;">
+        <div class="project-card glass">
+          <h4>Weather Dashboard</h4>
+          <p>For checking the climate</p>
+        </div>
+      </a>
+
+      <a href="https://golden-zuccutto-87406c.netlify.app/" target="_blank" style="text-decoration: none;">
+        <div class="project-card glass">
+          <h4>Fruit Plant Shop</h4>
+          <p>For selling and buying plants</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+    <!-- EDUCATION -->
+    <section class="card glass">
+      <div class="card-content" id="education">
+        <h2>Academic Qualification</h2>
+        <table>
+          <tr><th>No</th><th>Board</th><th>Year</th><th>%</th></tr>
+          <tr><td>1</td><td>SSC</td><td>2021</td><td>96.0%</td></tr>
+          <tr><td>2</td><td>HSC</td><td>2023</td><td>56%</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="card glass">
+      <div class="card-content">
+        <h2>Certificates</h2>
+        <div class="gallery">
+          <p>Cybersecurity analyst</p>
+          <p>Pinnacle Internship</p>
+          <p>Generative AI studio</p>
+          <p>Python by infosys</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MORE -->
+    <section class="card glass">
+      <div class="card-content">
+        <button id="moreBtn" class="btn" onclick="showMore()">Show More</button>
+        <div id="more">
+          <h2>Hobbies & Interests</h2>
+          <ul>
+            <li>Reading</li>
+            <li>Painting</li>
+            <li>Coding Challenges</li>
+            <li>Badminton</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="card glass">
+      <div class="card-content" id="contact">
+        <h2>Submit Your Details</h2>
+        <form onsubmit="displayDetails(event)">
+          <label>Name:</label><input type="text" name="name" placeholder="Your name">
+          <label>Class:</label><input type="text" name="class" placeholder="Your class">
+          <label>Roll No:</label>
+          <div><input type="radio" name="roll" value="35"> 35
+               <input type="radio" name="roll" value="36"> 36</div>
+          <input type="submit" value="Submit">
+        </form>
+        <div id="output"></div>
+      </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section class="card glass">
+      <div class="card-content">
+        <h2>Get In Touch</h2>
+        <p>Feel free to email or follow me:</p>
+        <p><strong>Email:</strong> <a href="mailto:pratikbendsurejain@gmail.com" style="color:#00d4ff;">pratikbendsurejain@gmail.com</a></p>
+        <div class="socials">
+          <a href="https://github.com/pratikbendsure" target="_blank" title="GitHub">
+            <img 
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" 
+              alt="GitHub" 
+              style="width:24px; height:24px; vertical-align:middle;"/>
+          </a>
+          <a href="https://www.linkedin.com/in/pratik-bendsure-b79755294/" target="_blank" title="LinkedIn">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/linkedin-icon-2.svg"
+              alt="LinkedIn"
+              style="width:24px; height:24px;"
+            />
+          </a>
+          <a href="https://www.instagram.com/pratik_bendsure_14.10" target="_blank" title="Instagram">
+            <img
+              src="image.png"
+              alt="Instagram"
+              style="width:24px; height:24px;"
+            />
+          </a>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  
+
+</body>
+</html>
